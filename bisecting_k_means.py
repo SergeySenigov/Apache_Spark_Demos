@@ -25,19 +25,20 @@ if __name__ == "__main__":
     model = bkm.fit(df)
 
     # Print the cluster centers and the predictions for each data point
-    print("\nCluster Centers:", model.clusterCenters())
-    print("Training clusters:")
+    print("\nTraining clusters:")
     model.summary.predictions.show(truncate=False)
+
+    print("Cluster Centers:")
+    for c in model.clusterCenters():
+        print(c)
     
     float_range = [i * 0.5 for i in range(-10, 27)]
 
-    data_predict2 = []
+    data_predict = []
     for x in float_range:
         for y in float_range:
-            data_predict2.append((Vectors.dense([x, y]), ))
+            data_predict.append((Vectors.dense([x, y]), ))
     
-    data_predict = data_predict2
-
     df_predict = spark.createDataFrame(data_predict, ["features",])
     
     # Print the new predictions using the transform() method
@@ -45,6 +46,6 @@ if __name__ == "__main__":
     model.setPredictionCol("predicted cluster")
     df_predicted = model.transform(df_predict)
 
-    l = df_predicted.collect()
-    for i in l:
-        print(str(i[0][0]).replace(".", ","), ";", str(i[0][1]).replace(".", ","), ";", i[1], sep="")
+    # l = df_predicted.collect()
+    # for i in l:
+    #     print(str(i[0][0]).replace(".", ","), ";", str(i[0][1]).replace(".", ","), ";", i[1], sep="")
