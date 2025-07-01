@@ -45,6 +45,7 @@ if __name__ == "__main__":
     print("\nNew predictions using with transform() method:")
     model.setPredictionCol("predicted cluster")
     df_predicted = model.transform(df_predict)
+    
 
     # l = df_predicted.collect()
     # for i in l:
